@@ -1,5 +1,6 @@
 from google import genai
 import json
+import sys
 client = genai.Client()  # reads GEMINI_API_KEY
 
 
@@ -30,7 +31,7 @@ def build_prompt(products, user_query):
         lines.append(line)
 
     context = "\n".join(lines)
-    return f"You are a product expert. Below are some product listings:\n\n{context}\n\nUser asked: {user_query}\nAnswer:"
+    return f"I want you to generate text that will be directly used as the main interface of an E-commerce platform through which a user will interact with the Ecommerce platform's product search experience . Your main goal is to help the user find the right product to buy and assist them with the shopping experience . This is the dataset for all the product listings availaible on the platform :\n\n{context}\n\n  -Make sure you do not answer any queries that are not related to the E-commerce store. \n User-query : {user_query}\n"
 
 
 def ask_gemini(prompt):
@@ -44,6 +45,7 @@ def ask_gemini(prompt):
 
 # Use case
 prods = load_filtered_products("./data/amazon2023_500.jsonl")
-prompt = build_prompt(prods, "what would be a good music album to buy for a sexy time?")
+print(sys.argv)
+prompt = build_prompt(prods, sys.argv[1])
 answer = ask_gemini(prompt)
 print(answer)

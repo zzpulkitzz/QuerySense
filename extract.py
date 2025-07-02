@@ -41,6 +41,3 @@ def convert(obj):
     else:
         return obj
 # 4️⃣ Save sampled output
-with open("./data/amazon2023_500.jsonl", "w") as f:
-    for item in sampled:
-        f.write(json.dumps(convert(item)) + "\n")
